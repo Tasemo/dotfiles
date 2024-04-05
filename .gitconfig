@@ -1,0 +1,5 @@
+[user]
+	name = Tim Oelkers
+	email = tim.oelkers@web.de
+[push]
+	autoSetupRemote = true
