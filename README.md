@@ -1,7 +1,7 @@
 # Personal dotfiles
 Just my personal configuration. Feel free to use any of it. I often switch tools and plan to provide consistent options for all of them. Tested on Arch Linux with the following tools:
 
-- Window Manager: swayfs
+- Window Manager: swayfx
 - Terminal Emulator: alacritty
 - Shell: bash, zsh
 - System monitor: conky
