@@ -1,0 +1,22 @@
+#!/bin/bash
+
+function get_file_index () {
+    index=0
+    for filename in $1/*; do
+        if [[ $filename == $2 ]]; then
+            return $index
+        fi
+        index=$((index + 1))
+    done
+    return -1
+}
+
+wallpaper_dir="$HOME/.wallpaper"
+wallpaper_count="$(ls $wallpaper_dir | wc -l)"
+current_wallpaper=$(ps aux | grep 'swaybg' | awk -F'swaybg' '{print $2}' | grep -v 'print' | awk -F' ' '{print $2}')
+get_file_index $wallpaper_dir $current_wallpaper
+next_index="$((($? + 1) % wallpaper_count + 1))"
+next_wallpaper="$wallpaper_dir/$(ls $wallpaper_dir | sed -n ${next_index}p)"
+killall swaybg
+swaymsg exec "swaybg -i $next_wallpaper -m fill"
+ln -sf $next_wallpaper ~/.config/current_wallpaper

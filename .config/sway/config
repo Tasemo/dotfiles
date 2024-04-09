@@ -21,8 +21,11 @@ dim_inactive_colors.unfocused #000000FF
 dim_inactive_colors.urgent #900000FF
 scratchpad_minimize disable
 
+# Behaviour
+floating_modifier $mod normal
+focus_on_window_activation focus
+
 # Displays
-output * bg ~/.wallpaper/wallhaven-6dz386_1920x1080.png fill
 output "Virtual-1" {
     resolution 1920x1080
 }
@@ -37,8 +40,8 @@ input "type:keyboard" {
 bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
-floating_modifier $mod normal
 bindsym $mod+Shift+c reload
+bindsym $mod+Shift+w exec next_wallpaper
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -102,6 +105,7 @@ bar {
 }
 
 exec mako
+exec next_wallpaper
 exec conky --daemonize
 
 include /etc/sway/config.d/*
