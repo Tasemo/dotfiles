@@ -1,6 +1,14 @@
 set $mod Mod4
 set $term alacritty
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $screenshot_dir $HOME/screenshots
+set $screenshot_name $screenshot_dir/$(date +'%s.png')
+
+# Startup Applications
+exec mkdir $screenshot_dir
+exec mako
+exec next_wallpaper
+exec conky --daemonize
 
 # Appearance
 corner_radius 10
@@ -43,6 +51,10 @@ bindsym $mod+d exec $menu
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+w exec next_wallpaper
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+l exec swaylock
+bindsym Print exec grim $screenshot_name
+bindsym Alt+Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') $screenshot_name
+bindsym Shift+Print exec grim -g "$(slurp)" $screenshot_name
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
@@ -82,7 +94,6 @@ bindsym $mod+Shift+space focus mode_toggle
 bindsym $mod+a focus parent
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
-bindsym $mod+i exec swaylock
 
 mode "resize" {
     bindsym Left resize shrink width 10px
@@ -103,9 +114,5 @@ bar {
         inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
-
-exec mako
-exec next_wallpaper
-exec conky --daemonize
 
 include /etc/sway/config.d/*
